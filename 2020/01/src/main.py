@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import List
+import time
 
 
 def read_lines_from_file(file_path: Path) -> List[str]:
@@ -41,12 +42,32 @@ def task02(input_lst: List[int]) -> int:
     raise RuntimeError("No solution for 2020 = x + y + z found")
 
 
+def task02_list_comprehension(input_lst: List[int]) -> int:
+    return [(x * y * z) for x in input_lst for y in input_lst for z in input_lst if 2020 == x + y + z][0]
+
+
 def main():
     input_lst = convert_str_to_int_list(read_lines_from_file(Path("./input.txt")))
     result_task1 = task01(input_lst)
     print(f"Result for task1: {result_task1}")
+    print("----------------------------------")
+
+    start = time.time()
     result_task2 = task02(input_lst)
+    print(f"Time task2: {time.time() - start}")
     print(f"Result for task2: {result_task2}")
+    print("----------------------------------")
+
+    start = time.time()
+    result_task2_bad = task02_bad_solution(input_lst)
+    print(f"Time task2_bad_solution: {time.time() - start}")
+    print(f"Result for task2_bad_solution: {result_task2}")
+    print("----------------------------------")
+
+    start = time.time()
+    result_list_comprehension = task02_list_comprehension(input_lst)
+    print(f"Result for task2_list_comprehension: {result_list_comprehension}")
+    print(f"Time task2_list_comprehension: {time.time() - start}")
 
 
 if __name__ == '__main__':
