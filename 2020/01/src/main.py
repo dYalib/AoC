@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List
+from typing import List, Set
 import time
 
 
@@ -8,11 +8,11 @@ def read_lines_from_file(file_path: Path) -> List[str]:
         return file.read().splitlines()
 
 
-def convert_str_to_int_list(lst: List[str]) -> List[int]:
-    return list(map(lambda x: int(x), lst))
+def convert_str_to_int_set(lst: List[str]) -> Set[int]:
+    return set(map(lambda x: int(x), lst))
 
 
-def task01(input_lst: List[int]) -> int:
+def task01(input_lst: Set[int]) -> int:
     for x in input_lst:
         y = 2020 - x
         if y in input_lst:
@@ -20,7 +20,7 @@ def task01(input_lst: List[int]) -> int:
     raise RuntimeError("No solution for 2020 = x + y found")
 
 
-def task02_bad_solution(input_lst: List[int]) -> int:
+def task02_bad_solution(input_lst: Set[int]) -> int:
     for x in input_lst:
         for y in input_lst:
             for z in input_lst:
@@ -30,7 +30,7 @@ def task02_bad_solution(input_lst: List[int]) -> int:
     raise RuntimeError("No solution for 2020 = x + y + z found")
 
 
-def task02(input_lst: List[int]) -> int:
+def task02(input_lst: Set[int]) -> int:
     for x in input_lst:
         yz = 2020 - x
         for y in input_lst:
@@ -47,7 +47,7 @@ def task02_list_comprehension(input_lst: List[int]) -> int:
 
 
 def main():
-    input_lst = convert_str_to_int_list(read_lines_from_file(Path("./input.txt")))
+    input_lst = convert_str_to_int_set(read_lines_from_file(Path("./input.txt")))
     result_task1 = task01(input_lst)
     print(f"Result for task1: {result_task1}")
     print("----------------------------------")
@@ -66,8 +66,9 @@ def main():
 
     start = time.time()
     result_list_comprehension = task02_list_comprehension(input_lst)
-    print(f"Result for task2_list_comprehension: {result_list_comprehension}")
     print(f"Time task2_list_comprehension: {time.time() - start}")
+    print(f"Result for task2_list_comprehension: {result_list_comprehension}")
+
 
 
 if __name__ == '__main__':
