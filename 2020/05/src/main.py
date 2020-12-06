@@ -14,16 +14,26 @@ def read_lines_from_file(file_path: Path) -> List[str]:
         return file.read().splitlines()
 
 
-def task01(input_lst: list) -> int:
+def convert_to_seat_id(input_lst: list) -> Set[int]:
     # remap "B","R" with 1 and "F","L" with 0
     # -> the result looks like a binary representation an can easy convert to a number
-    input_lst_subst = set(map(lambda x: re.sub("[BR]", "1", re.sub("[FL]", "0", x)), input_lst))
-    # simply the formula applied...
-    return max(map(lambda x: int(x[:-3], 2) * 8 + int(x[7:], 2), input_lst_subst))
+    return set(map(lambda x: int(re.sub("[BR]", "1", re.sub("[FL]", "0", x)), 2), input_lst))
 
 
-def task02(input_lst: list) -> int:
-    pass
+def task01(input_lst: list) -> int:
+    # simply return the maximum of the set
+    return max(convert_to_seat_id(input_lst))
+
+
+def task02(input_lst: list):
+    id_lst= list(convert_to_seat_id(input_lst))
+    list_iter = iter(id_lst)
+    for x in list_iter:
+        try:
+            if list_iter.__next__() - x == 2:
+                return x + 1
+        except StopIteration:
+            print("Oh. oh, there is no free seat :-(")
 
 
 def main():
