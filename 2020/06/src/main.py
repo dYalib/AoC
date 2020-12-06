@@ -26,12 +26,11 @@ def task01(input_lst: list) -> int:
 
 
 def task02(input_lst: list):
-    return sum(list(map(lambda x: len(reduce(lambda y, z: {*y}.intersection({*z}), re.split("\n", x))), input_lst)))
+    return sum((map(lambda x: len(reduce(lambda y, z: {*y}.intersection({*z}), re.split("\n", x))), input_lst)))
 
 
 def main():
     input_str = read_whole_file(Path("./input.txt"))
-    # print(split_groups(input_str))
     start = time.time()
     result_task1 = task01(split_groups(input_str))
     print(f"Time task1: {time.time() - start}")
